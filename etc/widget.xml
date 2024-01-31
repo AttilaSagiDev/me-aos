@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2015 Magevolve Ltd.
+ * See COPYING.txt for license details.
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="aos_products" class="Me\Aos\Block\Catalog\Product\Widget\AosWidget" is_email_compatible="true"
+            placeholder_image="Me_Aos::images/product_widget_aos.png" ttl="86400">
+        <label translate="true">Magevolve Products by Quantity Range List</label>
+        <description translate="true">List of products which are in a specified quantity range.</description>
+        <parameters>
+            <parameter name="show_title" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+                <label translate="true">Display Block Title</label>
+                <description translate="true">Select yes if you would like to show and customize block title.</description>
+            </parameter>
+            <parameter name="title" xsi:type="text" required="false" visible="true">
+                <label translate="true">The title of the Block</label>
+                <description translate="true">'Products by Quantity Range' by default, if not set.</description>
+                <depends>
+                    <parameter name="show_title" value="1" />
+                </depends>
+                <value>Products by Quantity Range</value>
+            </parameter>
+            <parameter name="show_subtitle" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+                <label translate="true">Display Short Description</label>
+                <description translate="true">Select yes if you would like to show and customize short description.</description>
+            </parameter>
+            <parameter name="subtitle" xsi:type="text" required="false" visible="true">
+                <label translate="true">Short Description under Block Title</label>
+                <description translate="true">You can set a short description which will appear under the title if not empty. You can use HTML tags for formatting.</description>
+                <depends>
+                    <parameter name="show_subtitle" value="1" />
+                </depends>
+                <value><![CDATA[These products are <strong>almost out of stock</strong> and will be available in 2 weeks.]]></value>
+            </parameter>
+            <parameter name="show_pager" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+                <label translate="true">Display Page Control</label>
+                <description translate="true">Select yes if you would like to use the pager.</description>
+            </parameter>
+            <parameter name="products_per_page" xsi:type="text" required="true" visible="true">
+                <label translate="true">Number of Products per Page</label>
+                <description translate="true">5 by default.</description>
+                <depends>
+                    <parameter name="show_pager" value="1" />
+                </depends>
+                <value>5</value>
+            </parameter>
+            <parameter name="qty_from" xsi:type="text" required="true" visible="true">
+                <label translate="true">Products minimum quantity limit to Display</label>
+                <description translate="true">1 by default. This value must be greater than zero.</description>
+                <value>1</value>
+            </parameter>
+            <parameter name="qty_to" xsi:type="text" required="true" visible="true">
+                <label translate="true">Products maximal quantity limit to Display</label>
+                <description translate="true">10 by default.</description>
+                <value>10</value>
+            </parameter>
+            <parameter name="products_count" xsi:type="text" required="true" visible="true">
+                <label translate="true">Number of Products to Display</label>
+                <description translate="true">10 by default.</description>
+                <value>10</value>
+            </parameter>
+            <parameter name="sort_by" xsi:type="select" required="true" visible="true">
+                <label translate="true">Available Product Listing Sort By</label>
+                <description translate="true">Please select the default sorting.</description>
+                <options>
+                    <option name="default" value="created_at" selected="true">
+                        <label translate="true">Creation Date</label>
+                    </option>
+                    <option name="name" value="name">
+                        <label translate="true">Name</label>
+                    </option>
+                    <option name="price" value="price">
+                        <label translate="true">Price</label>
+                    </option>
+                </options>
+            </parameter>
+            <parameter name="sort_direction" xsi:type="select" required="true" visible="true">
+                <label translate="true">Available Direction</label>
+                <description translate="true">Please select the default sorting direction.</description>
+                <options>
+                    <option name="default" value="asc" selected="true">
+                        <label translate="true">Asc</label>
+                    </option>
+                    <option name="desc" value="desc">
+                        <label translate="true">Desc</label>
+                    </option>
+                </options>
+            </parameter>
+            <parameter name="show_configurable" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+                <label translate="true">Show Configurable Products</label>
+                <description translate="true">Show configurable products which have associated simple products whose current quantity between the defined range.</description>
+            </parameter>
+            <parameter name="show_grouped" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+                <label translate="true">Show Grouped Products</label>
+                <description translate="true">Show grouped products which have associated simple products whose current quantity between the defined range.</description>
+            </parameter>
+            <parameter name="show_bundle" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+                <label translate="true">Show Bundle Products</label>
+                <description translate="true">Show bundle products which have associated simple products whose current quantity between the defined range.</description>
+            </parameter>
+            <parameter name="template" xsi:type="select" required="true" visible="true">
+                <label translate="true">Template</label>
+                <description translate="true">Please select the template to use.</description>
+                <options>
+                    <option name="default" value="catalog/product/widget/aos/content/aos_grid.phtml" selected="true">
+                        <label translate="true">Products Grid Template</label>
+                    </option>
+                    <option name="list" value="catalog/product/widget/aos/content/aos_list.phtml">
+                        <label translate="true">Products List Template</label>
+                    </option>
+                    <option name="list_default"
+                            value="catalog/product/widget/aos/column/aos_default_list.phtml">
+                        <label translate="true">Products Images and Names Template</label>
+                    </option>
+                    <option name="list_names"
+                            value="catalog/product/widget/aos/column/aos_names_list.phtml">
+                        <label translate="true">Products Names Only Template</label>
+                    </option>
+                    <option name="list_images"
+                            value="catalog/product/widget/aos/column/aos_images_list.phtml">
+                        <label translate="true">Products Images Only Template</label>
+                    </option>
+                </options>
+            </parameter>
+            <parameter name="cache_lifetime" xsi:type="text" visible="true">
+                <label translate="true">Cache Lifetime (Seconds)</label>
+                <description translate="true">86400 by default, if not set. To refresh instantly, clear the Blocks HTML Output cache.</description>
+            </parameter>
+        </parameters>
+        <containers>
+            <container name="sidebar.main">
+                <template name="default" value="list_default" />
+                <template name="names_only" value="list_names" />
+                <template name="images_only" value="list_images" />
+            </container>
+            <container name="content">
+                <template name="grid" value="default" />
+                <template name="list" value="list" />
+            </container>
+            <container name="sidebar.additional">
+                <template name="default" value="list_default" />
+                <template name="names_only" value="list_names" />
+                <template name="images_only" value="list_images" />
+            </container>
+        </containers>
+    </widget>
+</widgets>
