@@ -1,0 +1,47 @@
+<?php
+/**
+ * Copyright © 2016 Magevolve Ltd. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * Template for displaying Products by Quantity Range widget
+ *
+ * @var $block \Me\Aos\Block\Catalog\Product\Widget\AosWidget
+ */
+$title = $block->getTitle();
+$subtitle = $block->getSubTitle();
+?>
+<?php if ($block->getExtensionHelper()->isEnabled()
+    && ($_products = $block->getProductsCollection())
+    && $_products->getSize()) : ?>
+    <div class="block widget block-aos-products-images">
+        <?php if ($block->getShowTitle()) : ?>
+            <div class="block-title">
+                <strong><?php /* @escapeNotVerified */ echo $block->escapeHtml($title) ?></strong>
+            </div>
+        <?php endif; ?>
+        <div class="block-content">
+            <?php if ($subtitle != '') : ?>
+                <p class="block-subtitle"><?php /* @noEscape */ echo $subtitle ?></p>
+            <?php endif; ?>
+            <?php $suffix = $block->getNameInLayout(); ?>
+            <ol id="widget-aos-products-<?php /* @noEscape */ echo $suffix; ?>"
+                class="product-items product-items-images">
+                <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+                <?php foreach ($_products->getItems() as $_product) : ?>
+                    <li class="product-item">
+                        <a class="product-item-photo"
+                           href="<?php /* @noEscape */ echo $_product->getProductUrl() ?>"
+                           title="<?php /* @noEscape */ echo $block->stripTags($_product->getName(), null, true) ?>">
+                            <?php /* aos_products_images_only_widget */ ?>
+                            <?php echo $block->getImage($_product, 'aos_products_images_only_widget')->toHtml(); ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+            <?php echo $block->getPagerHtml() ?>
+        </div>
+    </div>
+<?php endif; ?>
